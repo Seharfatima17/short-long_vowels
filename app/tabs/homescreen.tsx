@@ -24,7 +24,7 @@ export default function VowelSoundsHome() {
         router.push('/tabs/short-u');
         break;
       default:
-        router.push('/tabs/short-a');
+        router.push('/tabs/short(a)');
     }
   };
 

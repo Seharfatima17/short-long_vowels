@@ -46,7 +46,7 @@ export default function ShortUActivityScreen() {
       {/* Back Button */}
       <TouchableOpacity
         style={styles.backButton}
-        onPress={() => router.push('/tabs/long-o2')}
+        onPress={() => router.push('/tabs/homescreen')}
       >
         <Ionicons name="arrow-back" size={28} color="#2a52be" />
       </TouchableOpacity>
