@@ -3,32 +3,19 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import * as Speech from 'expo-speech';
 import { useState } from 'react';
-<<<<<<< HEAD:app/tabs/short(a).tsx
 import { useRouter } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons'; // Make sure to install this package
+import { Ionicons } from '@expo/vector-icons';
 
-export default function VowelActivityScreen() {
+export default function ShortEActivityScreen() {
   const router = useRouter();
-
-  // Vowel data for dyslexic learners
-  const vowelData = {
-    letter: 'a',
-    soundDescription: 'Short A sound (as in cat)',
-    examples: ['cat', 'at', 'bat', 'hat', 'mat', 'rat', 'as'],
-=======
-import { useRouter } from 'expo-router'; // Added for navigation
-
-export default function VowelActivityScreen() {
-  const router = useRouter(); // Initialize router
   
-  // Vowel data for dyslexic learners
+  // Vowel data for dyslexic learners - updated for short E
   const vowelData = {
-    letter: 'a',
-    sound: 'æ',
-    soundDescription: 'Short A sound (as in cat)',
-    examples: ['cat', 'at' ,'bat', 'hat', 'mat', 'rat', 'as'],
->>>>>>> origin/main:app/(tabs)/short(a).tsx
-    practiceWords: ['can', 'dad', 'fan', 'gap', 'ham']
+    letter: 'e',
+    sound: 'eh', // Changed to short E sound
+    soundDescription: 'Short E sound (as in bed)',
+    examples: ['bed', 'red', 'pen', 'leg', 'net', 'wet', 'egg'],
+    practiceWords: ['men', 'pet', 'jet', 'web', 'hen']
   };
 
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -40,103 +27,61 @@ export default function VowelActivityScreen() {
     setIsSpeaking(true);
     Speech.speak(text, {
       language: 'en-US',
-<<<<<<< HEAD:app/tabs/short(a).tsx
-      rate: 0.5, // slightly slower for clarity
-      pitch: 1.0,
-=======
-      rate: 0.9, // Slower for dyslexic learners
->>>>>>> origin/main:app/(tabs)/short(a).tsx
+      rate: 0.8,
       onDone: () => setIsSpeaking(false),
       onStopped: () => setIsSpeaking(false)
     });
   };
 
-<<<<<<< HEAD:app/tabs/short(a).tsx
-  const playShortASound = () => {
-    // Short "a" sound repeated 3 times for clarity
-    speak('ae,ae,ae');
+  // Updated to say the short E sound ("eh") three times
+  const playSoundThreeTimes = () => {
+    speak(`eh, eh, eh`); // Directly using the short E sound
   };
 
   const navigateToLetterActivityScreen = () => {
-    router.replace("/tabs/short-a1");
-  };
-
-  const goBackToHome = () => {
-    router.replace("/tabs/homescreen");
+    router.push(`/short(e)1`);
   };
 
   return (
     <ThemedView style={styles.container}>
       {/* Back Button */}
-      <TouchableOpacity 
+      <TouchableOpacity
         style={styles.backButton}
-        onPress={goBackToHome}
+        onPress={() => router.push('/long(a)2')}
       >
         <Ionicons name="arrow-back" size={28} color="#2a52be" />
       </TouchableOpacity>
-
-=======
-  const playSoundThreeTimes = () => {
-    speak(`${vowelData.sound}, ${vowelData.sound}, ${vowelData.sound}`);
-  };
-
-  // Navigation function to letter activity
-  const navigateToLetterActivityScreen= () => {
-    router.push(`/short(a)1`);
-  };
-  
-
-  return (
-    <ThemedView style={styles.container}>
->>>>>>> origin/main:app/(tabs)/short(a).tsx
+        
       {/* Vowel Introduction */}
       <View style={styles.section}>
         <ThemedText style={styles.title}>Short Vowel Sound</ThemedText>
         <View style={styles.letterCard}>
           <ThemedText style={styles.letter}>{vowelData.letter}</ThemedText>
-<<<<<<< HEAD:app/tabs/short(a).tsx
-=======
-          <ThemedText style={styles.sound}>{vowelData.sound}</ThemedText>
->>>>>>> origin/main:app/(tabs)/short(a).tsx
+          <ThemedText style={styles.sound}>eh</ThemedText> {/* Display short E sound */}
         </View>
         <ThemedText style={styles.description}>
           {vowelData.soundDescription}
         </ThemedText>
-<<<<<<< HEAD:app/tabs/short(a).tsx
 
-        <TouchableOpacity
-          style={styles.soundButton}
-          onPress={playShortASound}
-          disabled={isSpeaking}
-        >
-          <ThemedText style={styles.buttonText}>
-            {isSpeaking ? 'Playing...' : 'Pronunciation of Short A'}
-=======
-        
         <TouchableOpacity 
           style={styles.soundButton}
           onPress={playSoundThreeTimes}
           disabled={isSpeaking}
         >
           <ThemedText style={styles.buttonText}>
-            {isSpeaking ? 'Playing...' : 'pronunciation of letter A'}
->>>>>>> origin/main:app/(tabs)/short(a).tsx
+            {isSpeaking ? 'Playing...' : 'Pronounce Letter E'}
           </ThemedText>
         </TouchableOpacity>
       </View>
 
+      {/* Rest of the component remains the same */}
       {/* Example Words */}
       <View style={styles.section}>
         <ThemedText style={styles.subtitle}>Example Words:</ThemedText>
         <View style={styles.wordGrid}>
           {vowelData.examples.map((word, index) => (
-<<<<<<< HEAD:app/tabs/short(a).tsx
-            <TouchableOpacity
-              key={index}
-=======
             <TouchableOpacity 
               key={index} 
->>>>>>> origin/main:app/(tabs)/short(a).tsx
               style={styles.wordCard}
               onPress={() => speak(word)}
               disabled={isSpeaking}
@@ -159,51 +104,21 @@ export default function VowelActivityScreen() {
         </View>
       </View>
 
-<<<<<<< HEAD:app/tabs/short(a).tsx
       {/* Next Button */}
-      <TouchableOpacity
-=======
-      {/* Next Button - Added at the bottom */}
       <TouchableOpacity 
->>>>>>> origin/main:app/(tabs)/short(a).tsx
         style={styles.nextButton}
         onPress={navigateToLetterActivityScreen}
       >
         <ThemedText style={styles.nextButtonText}>Next Activity</ThemedText>
       </TouchableOpacity>
     </ThemedView>
-<<<<<<< HEAD:app/tabs/short(a).tsx
-=======
-    
->>>>>>> origin/main:app/(tabs)/short(a).tsx
   );
 }
 
+// Styles remain exactly the same
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-<<<<<<< HEAD:app/tabs/short(a).tsx
-    padding: 5,
-    paddingTop: 70,
-    margin: 10,
-  },
-  backButton: {
-    position: 'absolute',
-    top: 50,
-    left: 5,
-    zIndex: 1,
-    backgroundColor: 'rgba(255,255,255,0.7)',
-    borderRadius: 20,
-    padding: 8,
-  },
-  section: {
-    marginBottom: 9,
-  },
-  title: {
-    fontSize: 27,
-    fontWeight: 'bold',
-    marginBottom: 5,
-=======
     padding: 2,
     paddingTop: 40,
   },
@@ -214,39 +129,19 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 15,
->>>>>>> origin/main:app/(tabs)/short(a).tsx
     textAlign: 'center',
     color: '#2a52be',
   },
   subtitle: {
-<<<<<<< HEAD:app/tabs/short(a).tsx
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 15,
-    color: '#4a90e2',
-    marginLeft: 10,
-=======
     fontSize: 22,
     fontWeight: '600',
     marginBottom: 10,
     color: '#4a90e2',
->>>>>>> origin/main:app/(tabs)/short(a).tsx
   },
   letterCard: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'baseline',
-<<<<<<< HEAD:app/tabs/short(a).tsx
-    marginVertical: 5,
-  },
-  letter: {
-    fontSize: 60,
-    fontWeight: 'bold',
-    color: '#2a52be',
-    marginRight: 1,
-    marginBottom: 5,
-    lineHeight: 47,
-=======
     marginVertical: 15,
   },
   letter: {
@@ -258,22 +153,10 @@ const styles = StyleSheet.create({
   sound: {
     fontSize: 50,
     color: '#4a90e2',
->>>>>>> origin/main:app/(tabs)/short(a).tsx
   },
   description: {
     fontSize: 18,
     textAlign: 'center',
-<<<<<<< HEAD:app/tabs/short(a).tsx
-    marginBottom: 5,
-    lineHeight: 16,
-  },
-  soundButton: {
-    backgroundColor: '#4a90e2',
-    padding: 8,
-    borderRadius: 8,
-    alignItems: 'center',
-    marginVertical: 22,
-=======
     marginBottom: 20,
     lineHeight: 26,
   },
@@ -283,7 +166,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     marginVertical: 10,
->>>>>>> origin/main:app/(tabs)/short(a).tsx
   },
   buttonText: {
     color: 'white',
@@ -297,16 +179,6 @@ const styles = StyleSheet.create({
   },
   wordCard: {
     backgroundColor: '#e9f5ff',
-<<<<<<< HEAD:app/tabs/short(a).tsx
-    padding: 10,
-    borderRadius: 10,
-    margin: 5,
-    minWidth: 50,
-    alignItems: 'center',
-  },
-  wordText: {
-    fontSize: 19,
-=======
     padding: 15,
     borderRadius: 8,
     margin: 5,
@@ -315,38 +187,19 @@ const styles = StyleSheet.create({
   },
   wordText: {
     fontSize: 20,
->>>>>>> origin/main:app/(tabs)/short(a).tsx
     fontWeight: 'bold',
   },
   practiceWordCard: {
     backgroundColor: '#f0f8ff',
-<<<<<<< HEAD:app/tabs/short(a).tsx
-    padding: 10,
-    borderRadius: 10,
-    margin: 5,
-=======
     padding: 12,
     borderRadius: 6,
     margin: 4,
->>>>>>> origin/main:app/(tabs)/short(a).tsx
     minWidth: 70,
     alignItems: 'center',
   },
   practiceWordText: {
-<<<<<<< HEAD:app/tabs/short(a).tsx
-    fontSize: 19,
-  },
-  nextButton: {
-    backgroundColor: '#2a52be',
-    padding: 10,
-    borderRadius: 8,
-    alignItems: 'center',
-    margin: 10,
-    marginTop: 15,
-=======
     fontSize: 18,
   },
-  // Added style for the Next button
   nextButton: {
     backgroundColor: '#2a52be',
     padding: 15,
@@ -354,15 +207,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     margin: 20,
     marginTop: 10,
->>>>>>> origin/main:app/(tabs)/short(a).tsx
   },
   nextButtonText: {
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
   },
-<<<<<<< HEAD:app/tabs/short(a).tsx
+  backButton: {
+    position: 'absolute',
+    top: 40,
+    left: 20,
+    zIndex: 1,
+    padding: 10,
+  },
+  backButtonText: {
+    fontSize: 40,
+    color: '#2a52be',
+    fontWeight: 'bold',
+  },
 });
-=======
-});
->>>>>>> origin/main:app/(tabs)/short(a).tsx
