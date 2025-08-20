@@ -3,9 +3,8 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      
+      "@/*": ["./*"]
     }
   },
   "include": [
@@ -13,5 +12,11 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-  ]
+  ],
+  "expo": {
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
 }
+

@@ -9,14 +9,32 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "usesIcloudStorage": true,
+      "infoPlist": {
+        "NSSpeechRecognitionUsageDescription": "This app uses speech synthesis to help with vowel pronunciation",
+        "NSSpeechSynthesisUsageDescription": "This app uses speech synthesis to help with vowel pronunciation",
+        "NSMicrophoneUsageDescription": "App would like to access the microphone for speech features",
+        "NSPhotoLibraryUsageDescription": "Allow access to photos for custom word images",
+        "NSPhotoLibraryAddUsageDescription": "Allow saving word images to photos"
+      },
+      "bundleIdentifier": "com.yourcompany.myfirstapp"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.INTERNET",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+      ],
+      "package": "com.yourcompany.myfirstapp",
+      "softwareKeyboardLayoutMode": "pan",
+      "versionCode": 1
     },
     "web": {
       "bundler": "metro",
@@ -33,10 +51,17 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      "expo-web-browser"
     ],
     "experiments": {
-      "typedRoutes": true
+      "typedRoutes": true,
+      "tsconfigPaths": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "your-project-id-here"
+      }
     }
   }
 }

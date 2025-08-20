@@ -1,18 +1,21 @@
-import { Link, Stack } from 'expo-router';
-import { StyleSheet } from 'react-native';
-
+import { Stack, router } from 'expo-router';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
 export default function NotFoundScreen() {
+  const handlePress = () => {
+    router.replace('/tabs/homescreen');
+  };
+
   return (
     <>
       <Stack.Screen options={{ title: 'Oops!' }} />
       <ThemedView style={styles.container}>
         <ThemedText type="title">This screen does not exist.</ThemedText>
-        <Link href="/" style={styles.link}>
+        <TouchableOpacity onPress={handlePress} style={styles.link}>
           <ThemedText type="link">Go to home screen!</ThemedText>
-        </Link>
+        </TouchableOpacity>
       </ThemedView>
     </>
   );
