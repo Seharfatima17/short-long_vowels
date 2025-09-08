@@ -1,11 +1,12 @@
 import { StyleSheet, View, TouchableOpacity, Text, ScrollView } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { router } from 'expo-router';
 import { useState, useEffect } from 'react';
 import * as Speech from 'expo-speech';
+import { useNavigation } from '@react-navigation/native';
 
 export default function ESoundActivity() {
+  const navigation = useNavigation();
   const [activeItem, setActiveItem] = useState<string | null>(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
 
@@ -92,7 +93,7 @@ export default function ESoundActivity() {
       <View style={styles.navContainer}>
         <TouchableOpacity 
           style={styles.navButton}
-          onPress={() => router.replace('/tabs/short-e')}
+          onPress={() => navigation.navigate('short-e')}
           accessibilityLabel="Go back to E sound activities"
         >
           <Text style={styles.navText}>Back</Text>
@@ -100,7 +101,7 @@ export default function ESoundActivity() {
         
         <TouchableOpacity 
           style={[styles.navButton, styles.nextButton]}
-          onPress={() => router.push('/tabs/short-e2')}
+          onPress={() => navigation.navigate('short-e2')}
           accessibilityLabel="Go to next E sound activity"
         >
           <Text style={styles.navText}>Next Activity</Text>

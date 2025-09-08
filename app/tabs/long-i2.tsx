@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, Alert, UIManager } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useNavigation } from '@react-navigation/native';
 import Svg, { Line } from 'react-native-svg';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as Speech from 'expo-speech';
@@ -20,7 +20,7 @@ const originalPairs = [
 const { width, height } = Dimensions.get('window');
 
 export default function LongIActivity() {
-  const router = useRouter();
+  const navigation = useNavigation();
   const containerRef = useRef(null);
   const dotRefs = useRef({});
   const [lines, setLines] = useState([]);
@@ -129,14 +129,18 @@ export default function LongIActivity() {
     if (hasAttemptedMatching) {
       try {
         await saveScore('long', 'i', score, originalPairs.length, selectedWords);
-        router.push('/tabs/homescreen');
+        navigation.navigate('homescreen');
       } catch (error) {
         Alert.alert('Error', 'Failed to save score. Please try again.');
         return;
       }
     } else {
-      router.push('/tabs/homescreen');
+      navigation.navigate('homescreen');
     }
+  };
+
+  const navigateToLongI1 = () => {
+    navigation.navigate('long-i1');
   };
 
   return (
@@ -199,7 +203,7 @@ export default function LongIActivity() {
         </TouchableOpacity>
 
         <View style={styles.navRow}>
-          <TouchableOpacity style={styles.button} onPress={() => router.push('/tabs/long-i1')}>
+          <TouchableOpacity style={styles.button} onPress={navigateToLongI1}>
             <Text style={styles.buttonText}>⬅ Back</Text>
           </TouchableOpacity>
 

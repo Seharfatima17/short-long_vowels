@@ -3,16 +3,16 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import * as Speech from 'expo-speech';
 import { useState } from 'react';
-import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 export default function LongVowelAActivity() {
-  const router = useRouter();
+  const navigation = useNavigation();
   const [isSpeaking, setIsSpeaking] = useState(false);
 
   const vowelData = {
     letter: 'a',
-    //sound: 'ā',
+    sound: 'ā',
     soundDescription: 'Long A sound (as in cake)',
     examples: ['cake', 'cape', 'bake', 'name', 'game', 'tape', 'lake'],
     practiceWords: ['rain', 'day', 'play', 'stay', 'may'],
@@ -35,7 +35,7 @@ export default function LongVowelAActivity() {
   };
 
   const navigateToLetterActivityScreen = () => {
-    router.replace("/tabs/long-a1");
+    navigation.navigate('long-a1');
   };
 
   return (
@@ -44,7 +44,7 @@ export default function LongVowelAActivity() {
         {/* Back Button */}
         <TouchableOpacity 
           style={styles.backButton} 
-          onPress={() => router.push('/tabs/short-a2')}
+          onPress={() => navigation.navigate('short-a2')}
         >
           <Ionicons name="arrow-back" size={24} color="#2a52be" />
         </TouchableOpacity>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import * as Speech from 'expo-speech';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { useNavigation } from '@react-navigation/native';
 import { saveScore } from '../firebase/firebasehelper';
 
 const quizData = [
@@ -19,6 +19,7 @@ const quizData = [
 ];
 
 export default function ShortOQuiz() {
+  const navigation = useNavigation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
@@ -26,7 +27,6 @@ export default function ShortOQuiz() {
   const [score, setScore] = useState(0);
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [selectedWords, setSelectedWords] = useState<Record<number, string>>({});
-  const router = useRouter();
 
   const currentQuestion = quizData[currentIndex];
 
@@ -75,6 +75,10 @@ export default function ShortOQuiz() {
     setSelectedWords({});
   };
 
+  const navigateToShortO1 = () => {
+    navigation.navigate('short-o1');
+  };
+
   const goToNextActivity = async () => {
     if (quizCompleted) {
       try {
@@ -83,7 +87,7 @@ export default function ShortOQuiz() {
         console.error('Error saving score:', error);
       }
     }
-    router.push('/tabs/long-o');
+    navigation.navigate('long-o');
   };
 
   const getOptionStyle = (option: string) => {
@@ -135,7 +139,7 @@ export default function ShortOQuiz() {
   return (
     <View style={styles.container}>
       {/* Back Button */}
-      <TouchableOpacity style={styles.backButton} onPress={() => router.push('/tabs/short-o1')}>
+      <TouchableOpacity style={styles.backButton} onPress={navigateToShortO1}>
         <Ionicons name="arrow-back" size={28} color="#2a52be" />
       </TouchableOpacity>
 

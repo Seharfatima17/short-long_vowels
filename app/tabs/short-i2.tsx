@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, Alert, UIManager } from 'react-native';
-import { useRouter } from 'expo-router';
 import Svg, { Line } from 'react-native-svg';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as Speech from 'expo-speech';
 import { saveScore } from '../firebase/firebasehelper';
+import { useNavigation } from '@react-navigation/native';
 
 UIManager.setLayoutAnimationEnabledExperimental?.(true);
 
@@ -20,7 +20,7 @@ const originalPairs = [
 const { width, height } = Dimensions.get('window');
 
 export default function ShortIActivity() {
-  const router = useRouter();
+  const navigation = useNavigation();
   const containerRef = useRef(null);
   const dotRefs = useRef({});
   const [lines, setLines] = useState([]);
@@ -110,14 +110,14 @@ export default function ShortIActivity() {
     if (hasAttemptedMatching) {
       try {
         await saveScore('short', 'i', score, originalPairs.length, selectedWords);
-        router.push('/tabs/long-i');
+        navigation.navigate('long-i');
       } catch (error) {
         Alert.alert('Error', 'Failed to save score. Please try again.');
         return; // Don't navigate if there's an error saving
       }
     } else {
       // No matches attempted, just navigate
-      router.push('/tabs/long-i');
+      navigation.navigate('long-i');
     }
   };
 
@@ -181,7 +181,7 @@ export default function ShortIActivity() {
         </TouchableOpacity>
 
         <View style={styles.navRow}>
-          <TouchableOpacity style={styles.button} onPress={() => router.push('/tabs/short-i1')}>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('short-i1')}>
             <Text style={styles.buttonText}>⬅ Back</Text>
           </TouchableOpacity>
 

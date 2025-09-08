@@ -1,11 +1,12 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { router } from 'expo-router';
 import * as Speech from 'expo-speech';
 import { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 export default function ISoundActivity() {
+  const navigation = useNavigation();
   const [activeItem, setActiveItem] = useState<string | null>(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
 
@@ -86,7 +87,7 @@ export default function ISoundActivity() {
       <View style={styles.navContainer}>
         <TouchableOpacity 
           style={styles.navButton}
-          onPress={() => router.replace('/tabs/short-i')}
+          onPress={() => navigation.navigate('short-i')}
           accessibilityLabel="Go back to short I activities"
         >
           <Text style={styles.navText}>Back</Text>
@@ -94,7 +95,7 @@ export default function ISoundActivity() {
         
         <TouchableOpacity 
           style={[styles.navButton, styles.nextButton]}
-          onPress={() => router.push('/tabs/short-i2')}
+          onPress={() => navigation.navigate('short-i2')}
           accessibilityLabel="Go to next short I activity"
         >
           <Text style={styles.navText}>Next Activity</Text>
@@ -166,6 +167,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: 'bold',
     textShadowColor: 'rgba(0,0,0,0.2)',
+
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
     fontFamily: 'System',

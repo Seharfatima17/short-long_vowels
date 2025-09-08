@@ -1,17 +1,16 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { useNavigation } from '@react-navigation/native';
 import * as Speech from 'expo-speech';
 import { useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 export default function ShortUActivityScreen() {
-  const router = useRouter();
-
+  const navigation = useNavigation();
+  
   const vowelData = {
     letter: 'u',
-    //sound: 'uh',
     soundDescription: 'Short U sound (as in sun)',
     examples: ['sun', 'bus', 'cup', 'jug', 'rug', 'hug', 'mud'],
     practiceWords: ['fun', 'bun', 'run', 'cut', 'nut']
@@ -37,8 +36,12 @@ export default function ShortUActivityScreen() {
     speak('uh, uh, uh');
   };
 
-  const navigateToLetterActivityScreen = () => {
-    router.push('/tabs/short-u1');
+  const navigateBack = () => {
+    navigation.navigate('homescreen');
+  };
+
+  const navigateNext = () => {
+    navigation.navigate('short-u1');
   };
 
   return (
@@ -46,7 +49,7 @@ export default function ShortUActivityScreen() {
       {/* Back Button */}
       <TouchableOpacity
         style={styles.backButton}
-        onPress={() => router.push('/tabs/homescreen')}
+        onPress={navigateBack}
       >
         <Ionicons name="arrow-back" size={28} color="#2a52be" />
       </TouchableOpacity>
@@ -56,7 +59,6 @@ export default function ShortUActivityScreen() {
         <ThemedText style={styles.title}>Short Vowel Sound</ThemedText>
         <View style={styles.letterCard}>
           <ThemedText style={styles.letter}>{vowelData.letter}</ThemedText>
-          <ThemedText style={styles.sound}>{vowelData.sound}</ThemedText>
         </View>
         <ThemedText style={styles.description}>
           {vowelData.soundDescription}
@@ -105,13 +107,15 @@ export default function ShortUActivityScreen() {
       {/* Next Button */}
       <TouchableOpacity
         style={styles.nextButton}
-        onPress={navigateToLetterActivityScreen}
+        onPress={navigateNext}
       >
         <ThemedText style={styles.nextButtonText}>Next Activity</ThemedText>
       </TouchableOpacity>
     </ThemedView>
   );
 }
+
+// Styles same as ShortEActivityScreen
 
 const styles = StyleSheet.create({
   container: {

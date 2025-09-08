@@ -1,13 +1,13 @@
+import React, { useState } from 'react';
 import { StyleSheet, View, TouchableOpacity, SafeAreaView } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import * as Speech from 'expo-speech';
-import { useState } from 'react';
-import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 export default function VowelActivityScreen() {
-  const router = useRouter();
+  const navigation = useNavigation();
   const [isSpeaking, setIsSpeaking] = useState(false);
 
   const vowelData = {
@@ -35,11 +35,11 @@ export default function VowelActivityScreen() {
   };
 
   const navigateToLetterActivityScreen = () => {
-    router.push("/tabs/short-a1");
+    navigation.navigate('short-a1');
   };
 
   const goBackToHome = () => {
-    router.replace("/tabs/homescreen");
+    navigation.navigate('homescreen');
   };
 
   return (
@@ -231,6 +231,4 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
-
 });
-

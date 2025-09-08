@@ -123,7 +123,6 @@ const ShortEActivity = () => {
 
   const isCorrect = (index, word) => word === shortEWords[index].correct;
 
-
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.backArrow} onPress={() => navigation.navigate('short-e1')}>

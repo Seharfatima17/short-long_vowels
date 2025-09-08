@@ -1,13 +1,13 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { useNavigation } from '@react-navigation/native';
 import * as Speech from 'expo-speech';
 import { useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 export default function LongUActivityScreen() {
-  const router = useRouter();
+  const navigation = useNavigation();
 
   const vowelData = {
     letter: 'u',
@@ -38,7 +38,11 @@ export default function LongUActivityScreen() {
   };
 
   const navigateToLetterActivityScreen = () => {
-    router.push('/tabs/long-u1');
+    navigation.navigate('long-u1');
+  };
+
+  const navigateBack = () => {
+    navigation.navigate('short-u2');
   };
 
   return (
@@ -46,7 +50,7 @@ export default function LongUActivityScreen() {
       {/* Back Button */}
       <TouchableOpacity
         style={styles.backButton}
-        onPress={() => router.push('/tabs/short-u2')}
+        onPress={navigateBack}
       >
         <Ionicons name="arrow-back" size={28} color="#2a52be" />
       </TouchableOpacity>

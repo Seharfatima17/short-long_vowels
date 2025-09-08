@@ -1,14 +1,16 @@
 import { StyleSheet, View, TouchableOpacity, Text, Alert } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { useLocalSearchParams, router } from 'expo-router';
 import { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import * as Speech from 'expo-speech';
 import { saveScore } from '../firebase/firebasehelper';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 export default function LetterActivityScreen() {
-  const { letter } = useLocalSearchParams();
+  const navigation = useNavigation();
+  const route = useRoute();
+  const { letter } = route.params || { letter: 'a' };
   const letterString = Array.isArray(letter) ? letter[0] : letter || 'a';
   const [selectedWords, setSelectedWords] = useState<string[]>([]);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -64,7 +66,7 @@ export default function LetterActivityScreen() {
   const handleNextActivity = () => {
     if (selectedWords.length === 0) {
       // If no words selected, go directly to next page
-      router.replace("/tabs/short-a2");
+      navigation.navigate('short-a2');
     } else {
       // If words are selected, show score screen
       setShowScore(true);
@@ -83,7 +85,7 @@ export default function LetterActivityScreen() {
       
       if (saved) {
         console.log("Score saved successfully, navigating...");
-        router.replace("/tabs/short-a2");
+        navigation.navigate('short-a2');
       }
     } catch (error) {
       console.error("Save error:", error);
@@ -103,7 +105,7 @@ export default function LetterActivityScreen() {
 
   return (
     <ThemedView style={styles.container}>
-      <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/tabs/short(a)')}>
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('short(a)')}>
         <Ionicons name="arrow-back" size={28} color="#2a52be" />
       </TouchableOpacity>
 

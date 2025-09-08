@@ -1,17 +1,16 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { useNavigation } from '@react-navigation/native';
 import * as Speech from 'expo-speech';
 import { useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 export default function LongIActivityScreen() {
-  const router = useRouter();
+  const navigation = useNavigation();
 
   const vowelData = {
     letter: 'i',
-    //sound: 'igh',
     soundDescription: 'Long I sound (as in bike)',
     examples: ['bike', 'kite', 'ride', 'hide', 'smile', 'time', 'slide'],
     practiceWords: ['line', 'pipe', 'side', 'fine', 'white']
@@ -26,7 +25,7 @@ export default function LongIActivityScreen() {
     setIsSpeaking(true);
     Speech.speak(text, {
       language: 'en-US',
-      rate: 0.5, // Adjusted to match Short I screen
+      rate: 0.5,
       pitch: 1.0,
       onDone: () => setIsSpeaking(false),
       onStopped: () => setIsSpeaking(false)
@@ -38,7 +37,11 @@ export default function LongIActivityScreen() {
   };
 
   const navigateToLetterActivityScreen = () => {
-    router.push('/tabs/long-i1');
+    navigation.navigate('long-i1');
+  };
+
+  const navigateToPreviousScreen = () => {
+    navigation.navigate('short-i2');
   };
 
   return (
@@ -46,7 +49,7 @@ export default function LongIActivityScreen() {
       {/* Back Button */}
       <TouchableOpacity
         style={styles.backButton}
-        onPress={() => router.push('/tabs/short-i2')}
+        onPress={navigateToPreviousScreen}
       >
         <Ionicons name="arrow-back" size={28} color="#2a52be" />
       </TouchableOpacity>
@@ -56,7 +59,7 @@ export default function LongIActivityScreen() {
         <ThemedText style={styles.title}>Long Vowel Sound</ThemedText>
         <View style={styles.letterCard}>
           <ThemedText style={styles.letter}>{vowelData.letter}</ThemedText>
-          <ThemedText style={styles.sound}>{vowelData.sound}</ThemedText>
+          <ThemedText style={styles.sound}></ThemedText>
         </View>
         <ThemedText style={styles.description}>
           {vowelData.soundDescription}

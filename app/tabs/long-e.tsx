@@ -1,17 +1,17 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
 import * as Speech from 'expo-speech';
 import { useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 export default function LongVowelEActivity() {
-  const router = useRouter();
+  const navigation = useNavigation();
 
   const vowelData = {
     letter: 'e',
-    //sound: 'ē',
+    sound: 'ē',
     soundDescription: 'Long E sound (as in tree)',
     examples: ['see', 'tree', 'be', 'he', 'me', 'free', 'feet'],
     practiceWords: ['read', 'need', 'green', 'keep', 'deep']
@@ -42,7 +42,7 @@ export default function LongVowelEActivity() {
       {/* Back Button */}
       <TouchableOpacity
         style={styles.backButton}
-        onPress={() => router.push('/tabs/short-e2')}
+        onPress={() => navigation.navigate('short-e2')}
       >
         <Ionicons name="arrow-back" size={28} color="#2a52be" />
       </TouchableOpacity>
@@ -101,7 +101,7 @@ export default function LongVowelEActivity() {
       {/* Next Button */}
       <TouchableOpacity
         style={styles.nextButton}
-        onPress={() => router.push('/tabs/long-e1')}
+        onPress={() => navigation.navigate('long-e1')}
       >
         <ThemedText style={styles.nextButtonText}>Next Activity</ThemedText>
       </TouchableOpacity>

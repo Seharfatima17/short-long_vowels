@@ -1,17 +1,16 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { useNavigation } from '@react-navigation/native';
 import * as Speech from 'expo-speech';
 import { useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 export default function ShortOActivityScreen() {
-  const router = useRouter();
-
+  const navigation = useNavigation();
+  
   const vowelData = {
     letter: 'o',
-    //sound: 'ŏ',
     soundDescription: 'Short O sound (as in hot)',
     examples: ['hot', 'pot', 'not', 'dog', 'log', 'top', 'hop'],
     practiceWords: ['cot', 'mop', 'rob', 'job', 'box']
@@ -34,11 +33,15 @@ export default function ShortOActivityScreen() {
   };
 
   const playShortOSound = () => {
-    speak('o , o , o');
+    speak('ah, ah, ah');
   };
 
-  const navigateToLetterActivityScreen = () => {
-    router.push('/tabs/short-o1');
+  const handleBack = () => {
+    navigation.navigate('homescreen');
+  };
+
+  const handleNext = () => {
+    navigation.navigate('short-o1');
   };
 
   return (
@@ -46,7 +49,7 @@ export default function ShortOActivityScreen() {
       {/* Back Button */}
       <TouchableOpacity
         style={styles.backButton}
-        onPress={() => router.push('/tabs/homescreen')}
+        onPress={handleBack}
       >
         <Ionicons name="arrow-back" size={28} color="#2a52be" />
       </TouchableOpacity>
@@ -56,7 +59,6 @@ export default function ShortOActivityScreen() {
         <ThemedText style={styles.title}>Short Vowel Sound</ThemedText>
         <View style={styles.letterCard}>
           <ThemedText style={styles.letter}>{vowelData.letter}</ThemedText>
-          <ThemedText style={styles.sound}>{vowelData.sound}</ThemedText>
         </View>
         <ThemedText style={styles.description}>
           {vowelData.soundDescription}
@@ -105,7 +107,7 @@ export default function ShortOActivityScreen() {
       {/* Next Button */}
       <TouchableOpacity
         style={styles.nextButton}
-        onPress={navigateToLetterActivityScreen}
+        onPress={handleNext}
       >
         <ThemedText style={styles.nextButtonText}>Next Activity</ThemedText>
       </TouchableOpacity>

@@ -1,11 +1,12 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { router } from 'expo-router';
+import { useNavigation } from '@react-navigation/native';
 import * as Speech from 'expo-speech';
 import { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function USoundActivity() {
+  const navigation = useNavigation();
   const [activeItem, setActiveItem] = useState<string | null>(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
 
@@ -51,6 +52,14 @@ export default function USoundActivity() {
     return () => Speech.stop();
   }, []);
 
+  const navigateBack = () => {
+    navigation.replace('long-u');
+  };
+
+  const navigateNext = () => {
+    navigation.navigate('long-u2');
+  };
+
   return (
     <ThemedView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -86,7 +95,7 @@ export default function USoundActivity() {
       <View style={styles.navContainer}>
         <TouchableOpacity 
           style={styles.navButton}
-          onPress={() => router.replace('/tabs/long-u')}
+          onPress={navigateBack}
           accessibilityLabel="Go back to long U activities"
         >
           <Text style={styles.navText}>Back</Text>
@@ -94,7 +103,7 @@ export default function USoundActivity() {
         
         <TouchableOpacity 
           style={[styles.navButton, styles.nextButton]}
-          onPress={() => router.push('/tabs/long-u2')}
+          onPress={navigateNext}
           accessibilityLabel="Go to next long U activity"
         >
           <Text style={styles.navText}>Next Activity</Text>

@@ -1,12 +1,13 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Ionicons } from '@expo/vector-icons';
-import { router } from 'expo-router';
 import * as Speech from 'expo-speech';
 import { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 export default function LongESoundActivity() {
+  const navigation = useNavigation();
   const [activeItem, setActiveItem] = useState<string | null>(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
 
@@ -88,7 +89,7 @@ export default function LongESoundActivity() {
       <View style={styles.navContainer}>
         <TouchableOpacity 
           style={styles.navButton}
-          onPress={() => router.replace('/tabs/long-e')}
+          onPress={() => navigation.navigate('long-e')}
           accessibilityLabel="Go back to long E activities"
         >
           <Text style={styles.navText}>Back</Text>
@@ -96,7 +97,7 @@ export default function LongESoundActivity() {
         
         <TouchableOpacity 
           style={[styles.navButton, styles.nextButton]}
-          onPress={() => router.push('/tabs/long-e2')}
+          onPress={() => navigation.navigate('long-e2')}
           accessibilityLabel="Go to next long E activity"
         >
           <Text style={styles.navText}>Next Activity</Text>

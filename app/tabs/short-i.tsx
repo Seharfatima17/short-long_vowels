@@ -1,17 +1,15 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
 import * as Speech from 'expo-speech';
 import { useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 export default function ShortIActivityScreen() {
-  const router = useRouter();
-
+  const navigation = useNavigation();
   const vowelData = {
     letter: 'i',
-    //sound: 'ih',
     soundDescription: 'Short I sound (as in sit)',
     examples: ['sit', 'bit', 'hit', 'lip', 'pig', 'zip', 'tip'],
     practiceWords: ['win', 'dig', 'kid', 'fin', 'fix']
@@ -26,7 +24,7 @@ export default function ShortIActivityScreen() {
     setIsSpeaking(true);
     Speech.speak(text, {
       language: 'en-US',
-      rate: 0.5, // Adjusted to match Short E screen
+      rate: 0.5,
       pitch: 1.0,
       onDone: () => setIsSpeaking(false),
       onStopped: () => setIsSpeaking(false)
@@ -34,11 +32,15 @@ export default function ShortIActivityScreen() {
   };
 
   const playShortISound = () => {
-    speak('ei,ei,ei');
+    speak('ih, ih, ih');
   };
 
-  const navigateToLetterActivityScreen = () => {
-    router.push('/tabs/short-i1');
+  const handleBack = () => {
+    navigation.navigate('homescreen');
+  };
+
+  const handleNext = () => {
+    navigation.navigate('short-i1');
   };
 
   return (
@@ -46,7 +48,7 @@ export default function ShortIActivityScreen() {
       {/* Back Button */}
       <TouchableOpacity
         style={styles.backButton}
-        onPress={() => router.push('/tabs/homescreen')}
+        onPress={handleBack}
       >
         <Ionicons name="arrow-back" size={28} color="#2a52be" />
       </TouchableOpacity>
@@ -56,7 +58,6 @@ export default function ShortIActivityScreen() {
         <ThemedText style={styles.title}>Short Vowel Sound</ThemedText>
         <View style={styles.letterCard}>
           <ThemedText style={styles.letter}>{vowelData.letter}</ThemedText>
-          <ThemedText style={styles.sound}>{vowelData.sound}</ThemedText>
         </View>
         <ThemedText style={styles.description}>
           {vowelData.soundDescription}
@@ -105,7 +106,7 @@ export default function ShortIActivityScreen() {
       {/* Next Button */}
       <TouchableOpacity
         style={styles.nextButton}
-        onPress={navigateToLetterActivityScreen}
+        onPress={handleNext}
       >
         <ThemedText style={styles.nextButtonText}>Next Activity</ThemedText>
       </TouchableOpacity>

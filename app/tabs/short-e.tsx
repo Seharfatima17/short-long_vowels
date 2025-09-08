@@ -3,16 +3,13 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import * as Speech from 'expo-speech';
 import { useState } from 'react';
-import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 export default function ShortEActivityScreen() {
-  const router = useRouter();
-  
-  // Vowel data for dyslexic learners - updated for short E
+  const navigation = useNavigation();
   const vowelData = {
     letter: 'e',
-   // sound: 'eh', // Changed to short E sound
     soundDescription: 'Short E sound (as in bed)',
     examples: ['bed', 'red', 'pen', 'leg', 'net', 'wet', 'egg'],
     practiceWords: ['men', 'pet', 'jet', 'web', 'hen']
@@ -27,7 +24,7 @@ export default function ShortEActivityScreen() {
     setIsSpeaking(true);
     Speech.speak(text, {
       language: 'en-US',
-      rate: 0.5, // slightly slower for clarity
+      rate: 0.5,
       pitch: 1.0,
       onDone: () => setIsSpeaking(false),
       onStopped: () => setIsSpeaking(false)
@@ -35,11 +32,15 @@ export default function ShortEActivityScreen() {
   };
 
   const playShortESound = () => {
-    speak('aae,aae,aae');
+    speak('ei, aey, eea');
   };
 
-  const navigateToLetterActivityScreen = () => {
-    router.push('/tabs/short-e1');
+  const handleBack = () => {
+    navigation.navigate('homescreen');
+  };
+
+  const handleNext = () => {
+    navigation.navigate('short-e1');
   };
 
   return (
@@ -47,7 +48,7 @@ export default function ShortEActivityScreen() {
       {/* Back Button */}
       <TouchableOpacity
         style={styles.backButton}
-        onPress={() => router.push('/tabs/homescreen')}
+        onPress={handleBack}
       >
         <Ionicons name="arrow-back" size={28} color="#2a52be" />
       </TouchableOpacity>
@@ -57,7 +58,6 @@ export default function ShortEActivityScreen() {
         <ThemedText style={styles.title}>Short Vowel Sound</ThemedText>
         <View style={styles.letterCard}>
           <ThemedText style={styles.letter}>{vowelData.letter}</ThemedText>
-          <ThemedText style={styles.sound}>{vowelData.sound}</ThemedText>
         </View>
         <ThemedText style={styles.description}>
           {vowelData.soundDescription}
@@ -106,7 +106,7 @@ export default function ShortEActivityScreen() {
       {/* Next Button */}
       <TouchableOpacity
         style={styles.nextButton}
-        onPress={navigateToLetterActivityScreen}
+        onPress={handleNext}
       >
         <ThemedText style={styles.nextButtonText}>Next Activity</ThemedText>
       </TouchableOpacity>
@@ -120,6 +120,13 @@ const styles = StyleSheet.create({
     padding: 5,
     paddingTop: 70,
     margin: 10,
+  },
+  backButton: {
+    position: 'absolute',
+    top: 40,
+    left: 5,
+    zIndex: 1,
+    padding: 10,
   },
   section: {
     marginBottom: 9,
@@ -148,13 +155,8 @@ const styles = StyleSheet.create({
     fontSize: 60,
     fontWeight: 'bold',
     color: '#2a52be',
-    marginRight: 1,
     marginBottom: 5,
     lineHeight: 47,
-  },
-  sound: {
-    fontSize: 40,
-    color: '#4a90e2',
   },
   description: {
     fontSize: 18,
@@ -214,12 +216,5 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
-  },
-  backButton: {
-    position: 'absolute',
-    top: 40,
-    left: 5,
-    zIndex: 1,
-    padding: 10,
   },
 });

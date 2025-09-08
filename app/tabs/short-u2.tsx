@@ -1,6 +1,6 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { router } from 'expo-router';
+import { useNavigation } from '@react-navigation/native';
 import * as Speech from 'expo-speech';
 import { useState } from 'react';
 import { StyleSheet, TouchableOpacity, View, Modal, Image } from 'react-native';
@@ -8,6 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { saveScore } from '../firebase/firebasehelper';
 
 export default function ShortUActivity() {
+  const navigation = useNavigation();
   const [selectedWords, setSelectedWords] = useState<string[]>([]);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [showResults, setShowResults] = useState(false);
@@ -82,16 +83,16 @@ export default function ShortUActivity() {
     
     try {
       await saveScore("short", "u", score, total, selectedWordsObj);
-      router.push('/tabs/long-u');
+      navigation.navigate('long-u');
     } catch (error) {
       console.error("Failed to save score:", error);
       // Optionally show an error message to the user
-      router.push('/tabs/long-u'); // Still navigate even if save fails
+      navigation.navigate('long-u'); // Still navigate even if save fails
     }
   };
 
   const goBack = () => {
-    router.replace('/tabs/short-u1');
+    navigation.replace('short-u1');
   };
 
   return (

@@ -1,30 +1,31 @@
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { router } from 'expo-router';
+import { useNavigation } from '@react-navigation/native';
 
 export default function VowelSoundsHome() {
+  const navigation = useNavigation();
   const vowels = ['A', 'E', 'I', 'O', 'U'];
 
   const navigateToVowel = (vowel: string) => {
     switch(vowel) {
       case 'A':
-        router.push('/tabs/short(a)');
+        navigation.navigate('short(a)');
         break;
       case 'E':
-        router.push('/tabs/short-e');
+        navigation.navigate('short-e');
         break;
       case 'I':
-        router.push('/tabs/short-i');
+        navigation.navigate('short-i');
         break;
       case 'O':
-        router.push('/tabs/short-o');
+        navigation.navigate('short-o');
         break;
       case 'U':
-        router.push('/tabs/short-u');
+        navigation.navigate('short-u');
         break;
       default:
-        router.push('/tabs/short(a)');
+        navigation.navigate('ShortA' as never);
     }
   };
 

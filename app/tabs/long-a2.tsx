@@ -1,13 +1,14 @@
 import { StyleSheet, View, TouchableOpacity, Text, ScrollView } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { router } from 'expo-router';
 import { useState, useEffect } from 'react';
 import * as Speech from 'expo-speech';
 import { Ionicons } from '@expo/vector-icons';
 import { saveScore } from "../firebase/firebasehelper";
+import { useNavigation } from '@react-navigation/native';
 
 export default function LongASelectionActivity() {
+  const navigation = useNavigation();
   const [selectedWords, setSelectedWords] = useState<string[]>([]);
   const [incorrectSelections, setIncorrectSelections] = useState<string[]>([]);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -86,7 +87,7 @@ export default function LongASelectionActivity() {
   const handleNext = () => {
     if (selectedWords.length === 0) {
       // If no words selected, go directly to next page
-      router.push('/tabs/homescreen');
+      navigation.navigate('homescreen');
     } else {
       // If words are selected, show score screen
       setShowScore(true);
@@ -110,7 +111,7 @@ export default function LongASelectionActivity() {
         correctWords.length,
         selectedWords
       );
-      router.push('/tabs/homescreen');
+      navigation.navigate('homescreen');
     } catch (error) {
       console.error("Error saving score:", error);
     }
@@ -127,7 +128,7 @@ export default function LongASelectionActivity() {
       {/* Back Button */}
       <TouchableOpacity 
         style={styles.backButton} 
-        onPress={() => router.push('/tabs/long-a1')}
+        onPress={() => navigation.navigate('long-a1')}
       >
         <Ionicons name="arrow-back" size={24} color="#2a52be" />
       </TouchableOpacity>

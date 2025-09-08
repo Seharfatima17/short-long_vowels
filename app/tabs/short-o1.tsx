@@ -1,11 +1,12 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { router } from 'expo-router';
+import { useNavigation } from '@react-navigation/native';
 import * as Speech from 'expo-speech';
 import { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function OSoundActivity() {
+  const navigation = useNavigation();
   const [activeItem, setActiveItem] = useState<string | null>(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
 
@@ -51,6 +52,14 @@ export default function OSoundActivity() {
     return () => Speech.stop();
   }, []);
 
+  const navigateToShortO = () => {
+    navigation.replace('short-o');
+  };
+
+  const navigateToShortO2 = () => {
+    navigation.navigate('short-o2');
+  };
+
   return (
     <ThemedView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -86,7 +95,7 @@ export default function OSoundActivity() {
       <View style={styles.navContainer}>
         <TouchableOpacity 
           style={styles.navButton}
-          onPress={() => router.replace('/tabs/short-o')}
+          onPress={navigateToShortO}
           accessibilityLabel="Go back to short O activities"
         >
           <Text style={styles.navText}>Back</Text>
@@ -94,7 +103,7 @@ export default function OSoundActivity() {
         
         <TouchableOpacity 
           style={[styles.navButton, styles.nextButton]}
-          onPress={() => router.push('/tabs/short-o2')}
+          onPress={navigateToShortO2}
           accessibilityLabel="Go to next short O activity"
         >
           <Text style={styles.navText}>Next Activity</Text>
