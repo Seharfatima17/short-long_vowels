@@ -1,67 +1,48 @@
-
-import React from 'react';
-import { StyleSheet, Text, View, Button, Alert } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import VowelActivityScreen from './short(a)';
+import ShortA1Screen from './short-a1';
+import ShortA2Screen from './short-a2';
+import LongVowelAActivity from './long-a'; // Import the LongVowelAActivity screen
+import HomeScreen from './homescreen';
 
-// Screen for ShortA
-function ShortA({ navigation }) {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Short 'A' Sound</Text>
-      <Text style={styles.subtext}>This is the page for learning words with short 'a' sound.</Text>
-      <Button 
-        title="Go Back" 
-        onPress={() => navigation.goBack()} 
-      />
-    </View>
-  );
-}
-
-// Home Screen
-function HomeScreen({ navigation }) {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Welcome to Dyslexia App</Text>
-      <Text style={styles.subtext}>A simple and friendly app for learning.</Text>
-      <Button 
-        title="Start Game" 
-        onPress={() => navigation.navigate('short(a)')} 
-      />
-    </View>
-  );
-}
-
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="ShortA" component={ShortA} />
+      <Stack.Navigator initialRouteName="homescreen">
+        <Stack.Screen 
+          name="homescreen" 
+          component={HomeScreen} 
+          options={{ title: 'Home' }}
+        />
+        <Stack.Screen 
+          name="short(a)" 
+          component={VowelActivityScreen} 
+          options={{ title: 'Short A Sound' }}
+        />
+        <Stack.Screen 
+          name="short-a1" 
+          component={ShortA1Screen} 
+          options={{ title: 'Short A Activity' }}
+        />
+        <Stack.Screen 
+          name="short-a2" 
+          component={ShortA2Screen} 
+          options={{ title: 'A Sound Treasure Hunt' }}
+        />
+        <Stack.Screen 
+          name="long-a" 
+          component={LongVowelAActivity} 
+          options={{ title: 'Long A Sound' }}
+        />
+        <Stack.Screen 
+          name="long-a1" 
+          component={LongVowelAActivity} 
+          options={{ title: 'Long A Activity' }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F0F8FF',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20
-  },
-  heading: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20
-  },
-  subtext: {
-    fontSize: 16,
-    marginBottom: 40,
-    textAlign: 'center'
-  }
-
-});

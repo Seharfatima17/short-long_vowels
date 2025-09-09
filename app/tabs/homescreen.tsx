@@ -1,10 +1,21 @@
-import { ThemedView } from '@/components/ThemedView';
-import { ThemedText } from '@/components/ThemedText';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Text, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+
+// Define your navigation types
+type RootStackParamList = {
+  'short(a)': undefined;
+  'short-e': undefined;
+  'short-i': undefined;
+  'short-o': undefined;
+  'short-u': undefined;
+  // Add other screens as needed
+};
+
+type VowelSoundsNavigationProp = StackNavigationProp<RootStackParamList>;
 
 export default function VowelSoundsHome() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<VowelSoundsNavigationProp>();
   const vowels = ['A', 'E', 'I', 'O', 'U'];
 
   const navigateToVowel = (vowel: string) => {
@@ -25,15 +36,15 @@ export default function VowelSoundsHome() {
         navigation.navigate('short-u');
         break;
       default:
-        navigation.navigate('ShortA' as never);
+        navigation.navigate('short(a)');
     }
   };
 
   return (
-    <ThemedView style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
-        <ThemedText style={styles.title}>Capture the Correct</ThemedText>
-        <ThemedText style={styles.title}>Sound Of Vowels</ThemedText>
+        <Text style={styles.title}>Capture the Correct</Text>
+        <Text style={styles.title}>Sound Of Vowels</Text>
       </View>
       
       <View style={styles.buttonContainer}>
@@ -46,11 +57,11 @@ export default function VowelSoundsHome() {
             ]}
             onPress={() => navigateToVowel(vowel)}
           >
-            <ThemedText style={styles.buttonText}>Vowel {vowel}</ThemedText>
+            <Text style={styles.buttonText}>Vowel {vowel}</Text>
           </TouchableOpacity>
         ))}
       </View>
-    </ThemedView>
+    </SafeAreaView>
   );
 }
 

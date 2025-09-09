@@ -1,17 +1,31 @@
 import { StyleSheet, View, TouchableOpacity, Text, Alert } from 'react-native';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
 import { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import * as Speech from 'expo-speech';
 import { saveScore } from '../firebase/firebasehelper';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+// Define navigation types
+type RootStackParamList = {
+  'short(a)': undefined;
+  'short-a1': undefined;
+  'short-a2': undefined;
+  // Add other screens as needed
+};
+
+type RouteParams = {
+  letter?: string | string[];
+};
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 export default function LetterActivityScreen() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp>();
   const route = useRoute();
-  const { letter } = route.params || { letter: 'a' };
-  const letterString = Array.isArray(letter) ? letter[0] : letter || 'a';
+  const params = route.params as RouteParams;
+  const letter = params?.letter || 'a';
+  const letterString = Array.isArray(letter) ? letter[0] : letter;
   const [selectedWords, setSelectedWords] = useState<string[]>([]);
   const [showSuccess, setShowSuccess] = useState(false);
   const [incorrectSelection, setIncorrectSelection] = useState<string | null>(null);
@@ -104,20 +118,20 @@ export default function LetterActivityScreen() {
   };
 
   return (
-    <ThemedView style={styles.container}>
+    <View style={styles.container}>
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('short(a)')}>
         <Ionicons name="arrow-back" size={28} color="#2a52be" />
       </TouchableOpacity>
 
-      <ThemedText style={styles.title}>Find Words with: {letterString.toUpperCase()}</ThemedText>
-      <ThemedText style={styles.instructions}>
+      <Text style={styles.title}>Find Words with: {letterString.toUpperCase()}</Text>
+      <Text style={styles.instructions}>
         Tap on words that contain the letter "{letterString}"
-      </ThemedText>
+      </Text>
 
       {showSuccess && (
-        <ThemedText style={styles.successMessage}>
+        <Text style={styles.successMessage}>
           Excellent! You found all words with {letterString.toUpperCase()}!
-        </ThemedText>
+        </Text>
       )}
 
       <View style={styles.wordGrid}>
@@ -132,16 +146,16 @@ export default function LetterActivityScreen() {
             onPress={() => handleWordSelect(item.word)}
             activeOpacity={1}
           >
-            <ThemedText style={styles.wordText}>{item.word}</ThemedText>
+            <Text style={styles.wordText}>{item.word}</Text>
           </TouchableOpacity>
         ))}
       </View>
 
       {showScore && (
         <View style={styles.scoreBox}>
-          <ThemedText style={styles.score}>
+          <Text style={styles.score}>
             ✅ Correct: {score} / {correctWords.length}
-          </ThemedText>
+          </Text>
           <View style={styles.buttonRow}>
             <TouchableOpacity style={styles.tryButton} onPress={handleTryAgain}>
               <Text style={styles.tryText}>🔁 Try Again</Text>
@@ -158,7 +172,7 @@ export default function LetterActivityScreen() {
           <Text style={styles.nextButtonText}>Next Activity</Text>
         </TouchableOpacity>
       )}
-    </ThemedView>
+    </View>
   );
 }
 
@@ -168,6 +182,7 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingTop: 100,
     justifyContent: 'flex-start',
+    backgroundColor: '#fff', // Added background color
   },
   backButton: {
     position: 'absolute',
@@ -209,6 +224,7 @@ const styles = StyleSheet.create({
   wordText: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: '#000', // Added text color
   },
   correctWord: {
     backgroundColor: '#d4ffd6',

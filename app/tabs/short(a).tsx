@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TouchableOpacity, SafeAreaView } from 'react-native';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { StyleSheet, View, TouchableOpacity, SafeAreaView, Text } from 'react-native';
 import * as Speech from 'expo-speech';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+
+// Define navigation types
+type RootStackParamList = {
+  'homescreen': undefined;
+  'short-a1': undefined;
+  // Add other screens as needed
+};
 
 export default function VowelActivityScreen() {
   const navigation = useNavigation();
@@ -18,7 +23,7 @@ export default function VowelActivityScreen() {
     practiceWords: ['can', 'dad', 'fan', 'gap', 'ham']
   };
 
-  const speak = async (text) => {
+  const speak = async (text: string) => {
     if (isSpeaking) await Speech.stop();
     setIsSpeaking(true);
     Speech.speak(text, {
@@ -35,16 +40,18 @@ export default function VowelActivityScreen() {
   };
 
   const navigateToLetterActivityScreen = () => {
-    navigation.navigate('short-a1');
+    // Use type assertion for navigation
+    (navigation as any).navigate('short-a1');
   };
 
   const goBackToHome = () => {
-    navigation.navigate('homescreen');
+    // Use type assertion for navigation
+    (navigation as any).navigate('homescreen');
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <ThemedView style={styles.container}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+      <View style={styles.container}>
         {/* Back Button */}
         <TouchableOpacity 
           style={styles.backButton} 
@@ -55,29 +62,29 @@ export default function VowelActivityScreen() {
 
         {/* Vowel Introduction */}
         <View style={styles.section}>
-          <ThemedText style={styles.title}>Short Vowel Sound</ThemedText>
+          <Text style={styles.title}>Short Vowel Sound</Text>
           <View style={styles.letterCard}>
-            <ThemedText style={styles.letter}>{vowelData.letter}</ThemedText>
-            <ThemedText style={styles.sound}>{vowelData.sound}</ThemedText>
+            <Text style={styles.letter}>{vowelData.letter}</Text>
+            <Text style={styles.sound}>{vowelData.sound}</Text>
           </View>
-          <ThemedText style={styles.description}>
+          <Text style={styles.description}>
             {vowelData.soundDescription}
-          </ThemedText>
+          </Text>
 
           <TouchableOpacity
             style={styles.soundButton}
             onPress={playShortASound}
             disabled={isSpeaking}
           >
-            <ThemedText style={styles.buttonText}>
+            <Text style={styles.buttonText}>
               {isSpeaking ? 'Playing...' : 'Pronunciation of Short A'}
-            </ThemedText>
+            </Text>
           </TouchableOpacity>
         </View>
 
         {/* Example Words */}
         <View style={styles.section}>
-          <ThemedText style={styles.subtitle}>Example Words:</ThemedText>
+          <Text style={styles.subtitle}>Example Words:</Text>
           <View style={styles.wordGrid}>
             {vowelData.examples.map((word, index) => (
               <TouchableOpacity
@@ -86,7 +93,7 @@ export default function VowelActivityScreen() {
                 onPress={() => speak(word)}
                 disabled={isSpeaking}
               >
-                <ThemedText style={styles.wordText}>{word}</ThemedText>
+                <Text style={styles.wordText}>{word}</Text>
               </TouchableOpacity>
             ))}
           </View>
@@ -94,11 +101,11 @@ export default function VowelActivityScreen() {
 
         {/* Practice Words */}
         <View style={styles.section}>
-          <ThemedText style={styles.subtitle}>Practice Reading:</ThemedText>
+          <Text style={styles.subtitle}>Practice Reading:</Text>
           <View style={styles.wordGrid}>
             {vowelData.practiceWords.map((word, index) => (
               <View key={index} style={styles.practiceWordCard}>
-                <ThemedText style={styles.practiceWordText}>{word}</ThemedText>
+                <Text style={styles.practiceWordText}>{word}</Text>
               </View>
             ))}
           </View>
@@ -109,9 +116,9 @@ export default function VowelActivityScreen() {
           style={styles.nextButton}
           onPress={navigateToLetterActivityScreen}
         >
-          <ThemedText style={styles.nextButtonText}>Next Activity</ThemedText>
+          <Text style={styles.nextButtonText}>Next Activity</Text>
         </TouchableOpacity>
-      </ThemedView>
+      </View>
     </SafeAreaView>
   );
 }
@@ -122,6 +129,7 @@ const styles = StyleSheet.create({
     padding: 5,
     paddingTop: 70,
     margin: 10,
+    backgroundColor: '#fff', // Added background color to replace ThemedView
   },
   backButton: {
     position: 'absolute',
@@ -173,6 +181,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 5,
     lineHeight: 16,
+    color: '#000', // Added text color
   },
   soundButton: {
     backgroundColor: '#4a90e2',
@@ -202,6 +211,7 @@ const styles = StyleSheet.create({
   wordText: {
     fontSize: 19,
     fontWeight: 'bold',
+    color: '#000', // Added text color
   },
   
   practiceWordCard: {
@@ -215,6 +225,7 @@ const styles = StyleSheet.create({
 
   practiceWordText: {
     fontSize: 19,
+    color: '#000', // Added text color
   },
 
   nextButton: {

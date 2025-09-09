@@ -1,12 +1,22 @@
 import { StyleSheet, View, TouchableOpacity, Text, ScrollView } from 'react-native';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
 import { useState, useEffect } from 'react';
 import * as Speech from 'expo-speech';
 import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+// Define navigation types
+type RootStackParamList = {
+  'short(a)': undefined;
+  'short-a1': undefined;
+  'short-a2': undefined;
+  'long-a': undefined;
+  // Add other screens as needed
+};
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 export default function ASoundActivity() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp>();
   const [activeItem, setActiveItem] = useState<string | null>(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
 
@@ -25,10 +35,6 @@ export default function ASoundActivity() {
     { name: 'artist', color: '#00BCD4' },
     { name: 'avocado', color: '#8BC34A' },
   ];
-
-  const vowels = ['A', 'E', 'I', 'O', 'U'];
-  const currentVowelIndex = 0; // 'A' is first vowel
-  const nextVowel = vowels[currentVowelIndex + 1] || vowels[0]; // Loop back to 'A' if at end
 
   async function speakWord(word: string) {
     try {
@@ -55,16 +61,20 @@ export default function ASoundActivity() {
   }
 
   useEffect(() => {
-    return () => Speech.stop();
+    // Cleanup function when component unmounts
+    return () => {
+      // Use .then() instead of await since cleanup can't be async
+      Speech.stop().catch(error => console.error('Error stopping speech:', error));
+    };
   }, []);
 
   return (
-    <ThemedView style={styles.container}>
+    <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <ThemedText style={styles.title}>A Sound Treasure Hunt</ThemedText>
-        <ThemedText style={styles.subtitle}>
+        <Text style={styles.title}>A Sound Treasure Hunt</Text>
+        <Text style={styles.subtitle}>
           Tap items to hear their sounds!
-        </ThemedText>
+        </Text>
         
         <View style={styles.itemsContainer}>
           {items.map((item, index) => (
@@ -79,12 +89,12 @@ export default function ASoundActivity() {
               disabled={isSpeaking}
               accessibilityLabel={`Tap to hear ${item.name}`}
             >
-              <ThemedText style={[
+              <Text style={[
                 styles.itemText,
                 { color: getContrastColor(item.color) }
               ]}>
                 {item.name}
-              </ThemedText>
+              </Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -102,20 +112,26 @@ export default function ASoundActivity() {
         <TouchableOpacity 
           style={[styles.navButton, styles.nextButton]}
           onPress={() => navigation.navigate("long-a")} // Navigates to next vowel
-          accessibilityLabel={`Go to ${nextVowel} vowel activities`}
+          accessibilityLabel="Go to long A sound activities"
         >
           <Text style={styles.navText}>Long Sound</Text>
         </TouchableOpacity>
       </View>
-    </ThemedView>
+    </View>
   );
 }
 
 // Helper function for accessible text color contrast
 function getContrastColor(hexColor: string) {
-  const r = parseInt(hexColor.substr(1, 2), 16);
-  const g = parseInt(hexColor.substr(3, 2), 16);
-  const b = parseInt(hexColor.substr(5, 2), 16);
+  // Remove the # if present
+  const color = hexColor.replace('#', '');
+  
+  // Parse the r, g, b values
+  const r = parseInt(color.substr(0, 2), 16);
+  const g = parseInt(color.substr(2, 2), 16);
+  const b = parseInt(color.substr(4, 2), 16);
+  
+  // Calculate luminance
   const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
   return luminance > 0.5 ? '#000000' : '#FFFFFF';
 }
@@ -137,7 +153,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#2a52be',
     letterSpacing: 0.5,
-    lineHeight:35,
+    lineHeight: 35,
   },
   subtitle: {
     fontSize: 20,

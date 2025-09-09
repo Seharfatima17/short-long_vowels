@@ -1,13 +1,20 @@
-import { StyleSheet, View, TouchableOpacity, SafeAreaView } from 'react-native';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { StyleSheet, View, TouchableOpacity, SafeAreaView, Text } from 'react-native';
 import * as Speech from 'expo-speech';
 import { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+
+// Define navigation types
+type RootStackParamList = {
+  'short-a2': undefined;
+  'long-a1': undefined;
+};
+
+type LongVowelAActivityNavigationProp = StackNavigationProp<RootStackParamList>;
 
 export default function LongVowelAActivity() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<LongVowelAActivityNavigationProp>();
   const [isSpeaking, setIsSpeaking] = useState(false);
 
   const vowelData = {
@@ -18,12 +25,12 @@ export default function LongVowelAActivity() {
     practiceWords: ['rain', 'day', 'play', 'stay', 'may'],
   };
 
-  const speak = async (text) => {
+  const speak = async (text: string) => {
     if (isSpeaking) await Speech.stop();
     setIsSpeaking(true);
     Speech.speak(text, {
       language: 'en-US',
-      rate: 0.5, // Consistent with short vowel screen
+      rate: 0.5,
       pitch: 1.0,
       onDone: () => setIsSpeaking(false),
       onStopped: () => setIsSpeaking(false)
@@ -40,7 +47,7 @@ export default function LongVowelAActivity() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ThemedView style={styles.container}>
+      <View style={styles.container}>
         {/* Back Button */}
         <TouchableOpacity 
           style={styles.backButton} 
@@ -51,29 +58,29 @@ export default function LongVowelAActivity() {
 
         {/* Vowel Introduction */}
         <View style={styles.section}>
-          <ThemedText style={styles.title}>Long Vowel Sound</ThemedText>
+          <Text style={styles.title}>Long Vowel Sound</Text>
           <View style={styles.letterCard}>
-            <ThemedText style={styles.letter}>{vowelData.letter}</ThemedText>
-            <ThemedText style={styles.sound}>{vowelData.sound}</ThemedText>
+            <Text style={styles.letter}>{vowelData.letter}</Text>
+            <Text style={styles.sound}>{vowelData.sound}</Text>
           </View>
-          <ThemedText style={styles.description}>
+          <Text style={styles.description}>
             {vowelData.soundDescription}
-          </ThemedText>
+          </Text>
 
           <TouchableOpacity
             style={styles.soundButton}
             onPress={playSoundThreeTimes}
             disabled={isSpeaking}
           >
-            <ThemedText style={styles.buttonText}>
+            <Text style={styles.buttonText}>
               {isSpeaking ? 'Playing...' : 'Pronunciation of Long A'}
-            </ThemedText>
+            </Text>
           </TouchableOpacity>
         </View>
 
         {/* Example Words */}
         <View style={styles.section}>
-          <ThemedText style={styles.subtitle}>Example Words:</ThemedText>
+          <Text style={styles.subtitle}>Example Words:</Text>
           <View style={styles.wordGrid}>
             {vowelData.examples.map((word, index) => (
               <TouchableOpacity
@@ -82,7 +89,7 @@ export default function LongVowelAActivity() {
                 onPress={() => speak(word)}
                 disabled={isSpeaking}
               >
-                <ThemedText style={styles.wordText}>{word}</ThemedText>
+                <Text style={styles.wordText}>{word}</Text>
               </TouchableOpacity>
             ))}
           </View>
@@ -90,11 +97,11 @@ export default function LongVowelAActivity() {
 
         {/* Practice Words */}
         <View style={styles.section}>
-          <ThemedText style={styles.subtitle}>Practice Reading:</ThemedText>
+          <Text style={styles.subtitle}>Practice Reading:</Text>
           <View style={styles.wordGrid}>
             {vowelData.practiceWords.map((word, index) => (
               <View key={index} style={styles.practiceWordCard}>
-                <ThemedText style={styles.practiceWordText}>{word}</ThemedText>
+                <Text style={styles.practiceWordText}>{word}</Text>
               </View>
             ))}
           </View>
@@ -105,9 +112,9 @@ export default function LongVowelAActivity() {
           style={styles.nextButton}
           onPress={navigateToLetterActivityScreen}
         >
-          <ThemedText style={styles.nextButtonText}>Next Activity</ThemedText>
+          <Text style={styles.nextButtonText}>Next Activity</Text>
         </TouchableOpacity>
-      </ThemedView>
+      </View>
     </SafeAreaView>
   );
 }
